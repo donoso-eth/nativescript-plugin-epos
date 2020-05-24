@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { android  } from "tns-core-modules/application";
 import { EposEpson } from 'nativescript-epos-epson';
-declare let com: any;
+// declare let com: any;
 // declare let  EPOS_Exveption = com.epson.epos2.Epos2Exception;
 // declare let  EPOS_Printer = com.epson.epos2.printer.Printer
 // declare let  com.epson.epos2.Log;
@@ -32,9 +32,8 @@ export class HomeComponent implements OnInit {
 
         ngOnInit(): void {
 
-            let listen = new com.epson.epos2.discovery.DiscoveryListener( (device)=> {
-                console.log(device)
-            })
+
+
             console.log(35)
             try {
 

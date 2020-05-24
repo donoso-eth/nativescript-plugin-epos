@@ -13,6 +13,9 @@ export class EposEpson extends Common {
       constructor(){
         super();
         this.context = android.context;
+
+   
+
         this.printer = new Printer(Printer.TM_M30, Printer.MODEL_ANK, this.context );
       }
 
