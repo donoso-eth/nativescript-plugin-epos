@@ -3,12 +3,13 @@ import { android } from "tns-core-modules/application";
 declare let com: any;
 const Printer: any = com.epson.epos2.printer.Printer;
 
-export class EposEpson {
+export class EposEpson extends Common {
   printer: com.epson.epos2.printer.Printer;
   context: any;
   connectionListener: any;
 
   constructor() {
+    super();
     this.context = android.context;
 
     const myListener = new com.epson.epos2.printer.ReceiveListener({

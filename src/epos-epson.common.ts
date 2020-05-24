@@ -16,7 +16,11 @@ export class Common extends Observable {
   }
 
   public  connect(ip:string) {}
-
+  public  disconnect() {}
+  public addTextAlign() { }
+  public beginTransaction() { }
+  public sendData() {  }
+  public clearCommandBuffer() {   }
   public  addText(text:string) {}
 
 
