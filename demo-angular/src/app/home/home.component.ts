@@ -27,56 +27,56 @@ export class HomeComponent implements OnInit {
 
 
 
-    ngOnInit(): void {
+        ngOnInit(): void {
 
-        let listen = new com.epson.epos2.discovery.DiscoveryListener( (device)=> {
-            console.log(device)
-        })
-        console.log(35)
-        try {
+            let listen = new com.epson.epos2.discovery.DiscoveryListener( (device)=> {
+                console.log(device)
+            })
+            console.log(35)
+            try {
 
-        const printer = new com.epson.epos2.printer.Printer(com.epson.epos2.printer.Printer.TM_M30, com.epson.epos2.printer.Printer.MODEL_ANK, this.context );
-       console.log('5)')
-        console.log(printer)
-        console.log(6);
+            const printer = new com.epson.epos2.printer.Printer(com.epson.epos2.printer.Printer.TM_M30, com.epson.epos2.printer.Printer.MODEL_ANK, this.context );
+        console.log('5)')
+            console.log(printer)
+            console.log(6);
 
-       //printer.setReceiveEventListener(this.context);
-      // printer.setStatusChangeEventListener(this.context);
-            console.log(7);
-        //     printer.setInterval(3000);
-        //     printer.startMonitor();
+        //printer.setReceiveEventListener(this.context);
+        // printer.setStatusChangeEventListener(this.context);
+                console.log(7);
+            //     printer.setInterval(3000);
+            //     printer.startMonitor();
 
 
 
+
+                printer.addTextAlign(com.epson.epos2.printer.Printer.ALIGN_CENTER);
+            printer.addText("Hello World   ya estoy qui");
+            printer.addText("Hello World   ya estoy qui");
+            printer.addText("Hello World   ya estoy qui");
+            printer.addText("Hello World   ya estoy qui");
+            console.log(8);
+
+            printer.connect("TCP:192.168.0.16", com.epson.epos2.printer.Printer.PARAM_DEFAULT);
 
             printer.addTextAlign(com.epson.epos2.printer.Printer.ALIGN_CENTER);
-           printer.addText("Hello World   ya estoy qui");
-           printer.addText("Hello World   ya estoy qui");
-           printer.addText("Hello World   ya estoy qui");
-           printer.addText("Hello World   ya estoy qui");
-           console.log(8);
+            printer.addText("Hello World");
+            printer.beginTransaction();
+            printer.addText("Hello World!\n");
+            printer.sendData(com.epson.epos2.printer.Printer.PARAM_DEFAULT);
 
-           printer.connect("TCP:192.168.0.16", com.epson.epos2.printer.Printer.PARAM_DEFAULT);
-
-           printer.addTextAlign(com.epson.epos2.printer.Printer.ALIGN_CENTER);
-           printer.addText("Hello World");
-           printer.beginTransaction();
-           printer.addText("Hello World!\n");
-           printer.sendData(com.epson.epos2.printer.Printer.PARAM_DEFAULT);
-
-        } catch (error) {
-            console.log(error)
-            const b = error
+            } catch (error) {
+                console.log(error)
+                const b = error
 
 
 
-       console.log(error)
+        console.log(error)
+
+
+            }
 
 
         }
-
-
-    }
     mDiscoveryListener(){
         console.log('hola')
     }
