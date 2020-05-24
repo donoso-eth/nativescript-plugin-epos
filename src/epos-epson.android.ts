@@ -8,7 +8,7 @@ const Printer: any = com.epson.epos2.printer.Printer;
 export class EposEpson extends Common {
 
      printer:any;
-    context: any;
+     context: any;
 
       constructor(){
         super();
@@ -16,12 +16,17 @@ export class EposEpson extends Common {
         this.printer = new Printer(Printer.TM_M30, Printer.MODEL_ANK, this.context );
       }
 
-      private connect(){
-
+      connect( IP:string ){
+          //"TCP:192.168.0.16"
+        this.printer.connect(IP, Printer.PARAM_DEFAULT);
       }
 
-      addText(){
-          
+     addTextAlign(){
+        this.printer.addTextAlign(Printer.ALIGN_CENTER)
+      }
+
+      addText(text){
+          this.printer.addText(text)
       }
 
 
