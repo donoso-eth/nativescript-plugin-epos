@@ -5,13 +5,15 @@ import * as dialogs from 'tns-core-modules/ui/dialogs';
 export class Common extends Observable {
   public message: string;
 
+
   constructor() {
     super();
+
     this.message = Utils.SUCCESS_MSG();
   }
 
   public greet() {
-    return "Hello, NS";
+    return "Hello, NS-andr";
   }
 }
 

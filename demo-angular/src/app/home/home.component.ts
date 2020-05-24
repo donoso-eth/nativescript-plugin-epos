@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { android  } from "tns-core-modules/application";
-
+import { EposEpson } from 'nativescript-epos-epson';
 declare let com: any;
 // declare let  EPOS_Exveption = com.epson.epos2.Epos2Exception;
 // declare let  EPOS_Printer = com.epson.epos2.printer.Printer
@@ -18,9 +18,12 @@ export class epsonPrinter {}
 })
 export class HomeComponent implements OnInit {
     context: any;
+    epos: EposEpson;
 
     constructor() {
         this.context = android.context;
+
+        this.epos = new EposEpson()
         // Use the component constructor to inject providers.
     }
 
@@ -49,7 +52,7 @@ export class HomeComponent implements OnInit {
 
 
 
-                printer.addTextAlign(com.epson.epos2.printer.Printer.ALIGN_CENTER);
+            printer.addTextAlign(com.epson.epos2.printer.Printer.ALIGN_CENTER);
             printer.addText("Hello World   ya estoy qui");
             printer.addText("Hello World   ya estoy qui");
             printer.addText("Hello World   ya estoy qui");
