@@ -38,19 +38,15 @@ export class HomeComponent implements OnInit {
 
         // this.printer.addTextAlign(com.epson.epos2.this.printer.this.Printer.ALIGN_CENTER);
          this.printer.addText("Hello World   ya estoy qui");
-         this.printer.addText("Hello World   ya estoy qui");
-         this.printer.addText("Hello World   ya estoy qui");
-         this.printer.addText("Hello World   ya estoy qui");
+
         // console.log(8);
 
-         this.printer.connect("TCP:192.168.0.16");
+
 
          this.printer.addTextAlign();
-         this.printer.addText("Hello World");
-         this.printer.beginTransaction();
-         this.printer.addText("Hello World!\n");
          this.printer.sendData();
-         this.printer.disconnect();
+         //this.printer.beginTransaction()
+        // this.printer.disconnect();
 
         } catch (error) {
             console.log(error)
@@ -59,6 +55,17 @@ export class HomeComponent implements OnInit {
 
     }
 
+
+    connect(){
+
+        this.printer.connect("TCP:192.168.0.16");
+       // this.printer.sendData()
+       // this.printer.sendData();
+    }
+
+    disconnect(){
+        this.printer.printer.disconnect()
+    }
 
         ngOnInit(): void {
 
