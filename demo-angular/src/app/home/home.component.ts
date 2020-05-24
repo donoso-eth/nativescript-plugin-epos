@@ -17,11 +17,11 @@ import { EposEpson } from 'nativescript-epos-epson';
     templateUrl: "./home.component.html"
 })
 export class HomeComponent implements OnInit {
-    context: any;
+
     printer: EposEpson;
 
     constructor() {
-        this.context = android.context;
+
 
         this.printer = new EposEpson()
         // Use the component constructor to inject providers.
