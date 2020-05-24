@@ -40,8 +40,8 @@ export class HomeComponent implements OnInit {
         console.log(printer)
         console.log(6);
 
-       printer.setReceiveEventListener(this.context);
-        //   printer.setStatusChangeEventListener(this.context);
+       //printer.setReceiveEventListener(this.context);
+      // printer.setStatusChangeEventListener(this.context);
             console.log(7);
         //     printer.setInterval(3000);
         //     printer.startMonitor();
@@ -50,7 +50,10 @@ export class HomeComponent implements OnInit {
 
 
             printer.addTextAlign(com.epson.epos2.printer.Printer.ALIGN_CENTER);
-           printer.addText("Hello World");
+           printer.addText("Hello World   ya estoy qui");
+           printer.addText("Hello World   ya estoy qui");
+           printer.addText("Hello World   ya estoy qui");
+           printer.addText("Hello World   ya estoy qui");
            console.log(8);
 
            printer.connect("TCP:192.168.0.16", com.epson.epos2.printer.Printer.PARAM_DEFAULT);
