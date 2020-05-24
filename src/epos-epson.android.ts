@@ -5,18 +5,22 @@ const Printer: any = com.epson.epos2.printer.Printer;
 
 
 
-export class EposEpson extends Common {
+export class EposEpson  {
 
      printer:any;
      context: any;
 
       constructor(){
-        super();
+       
         this.context = android.context;
 
    
 
         this.printer = new Printer(Printer.TM_M30, Printer.MODEL_ANK, this.context );
+      }
+
+      disconnect(){
+        this.printer.disconnect()
       }
 
       connect( IP:string ){
@@ -30,6 +34,14 @@ export class EposEpson extends Common {
 
       addText(text){
           this.printer.addText(text)
+      }
+
+      beginTransaction() {
+      this.printer.beginTransaction()
+      }
+
+      sendData()  {
+        this.printer.sendData(Printer.PARAM_DEFAULT);
       }
 
 

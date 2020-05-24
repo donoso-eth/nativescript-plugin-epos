@@ -10,7 +10,15 @@ export class Common extends Observable {
     super();
 
     this.message = Utils.SUCCESS_MSG();
+
+
+
   }
+
+  public  connect(ip:string) {}
+
+  public  addText(text:string) {}
+
 
   public greet() {
     return "Hello, NS-andr";
