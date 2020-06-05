@@ -2,11 +2,14 @@ import { Common } from "./epos-epson.common";
 import { android } from "tns-core-modules/application";
 declare let com: any;
 const Printer: any = com.epson.epos2.printer.Printer;
+const Keyboard:any = com.epson.epos2.keyboard.Keyboard;
 
 export class EposEpson extends Common {
   printer: com.epson.epos2.printer.Printer;
+  keyboard: com.epson.epos2.keyboard.Keyboard
   context: any;
   connectionListener: any;
+  keyboardListener: any;
 
   constructor() {
     super();
@@ -41,12 +44,27 @@ export class EposEpson extends Common {
       },
     });
 
+
+
+    this.keyboardListener = new com.epson.epos2.keyboard.KeyPressListener({
+      onKbdKeyPress: (param0, param1, param2 ) => {
+          console.log(param1)
+          console.log(param2)
+      }
+
+    })
+
     //= {
     //   onPtrReceive: (info)=> {
     //     console.log(info)
     //   }
 
     // }
+
+
+    this.keyboard = new Keyboard(this.context)
+
+    this.keyboard.setKeyPressEventListener(this.keyboardListener)
 
     this.printer = new Printer(Printer.TM_M30, Printer.MODEL_ANK, this.context);
     this.printer.setReceiveEventListener(myListener);
@@ -64,6 +82,10 @@ export class EposEpson extends Common {
   disconnect() {
     this.printer.stopMonitor();
     this.printer.disconnect();
+  }
+
+  connectKeyboard(){
+      this.keyboard.connect("TCP:192.168.0.157[HID2]", Keyboard.PARAM_DEFAULT);
   }
 
   connect(IP: string) {

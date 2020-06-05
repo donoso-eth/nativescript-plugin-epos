@@ -10,6 +10,7 @@ export declare class Common extends Observable {
   public  addText(text:string) 
   public  disconnect();
 
+  public connectKeyboard();
 
   public addTextAlign()
   public beginTransaction() 

@@ -16,6 +16,7 @@ export class Common extends Observable {
   }
 
   public  connect(ip:string) {}
+  public connectKeyboard(){}
   public  disconnect() {}
   public addTextAlign() { }
   public beginTransaction() { }

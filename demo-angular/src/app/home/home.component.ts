@@ -55,10 +55,17 @@ export class HomeComponent implements OnInit {
 
     }
 
+    connectKeyboard(){
+
+        this.printer.connectKeyboard();
+       // this.printer.sendData()
+       // this.printer.sendData();
+    }
+
 
     connect(){
 
-        this.printer.connect("TCP:192.168.0.16");
+        this.printer.connect("TCP:192.168.0.157");
        // this.printer.sendData()
        // this.printer.sendData();
     }
