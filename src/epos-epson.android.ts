@@ -1,5 +1,6 @@
 import { Common } from "./epos-epson.common";
 import { android } from "tns-core-modules/application";
+import { Subject } from 'rxjs';
 declare let com: any;
 const Printer: any = com.epson.epos2.printer.Printer;
 const Keyboard:any = com.epson.epos2.keyboard.Keyboard;
@@ -10,11 +11,14 @@ export class EposEpson extends Common {
   context: any;
   connectionListener: any;
   keyboardListener: any;
+  barcode ="";
+  public barcode$: Subject<any>;
+
 
   constructor() {
     super();
     this.context = android.context;
-
+    
     const myListener = new com.epson.epos2.printer.ReceiveListener({
       onPtrReceive: (param0, parm1, param2, param3) => {
         const info: com.epson.epos2.printer.PrinterStatusInfo = param2;
@@ -27,6 +31,7 @@ export class EposEpson extends Common {
     const statusListener = new com.epson.epos2.printer.StatusChangeListener({
       onPtrStatusChange: (param0, param1) => {
         console.log("status: " + param1);
+
         // switch (param1) {
         //   case Printer.:
 
@@ -44,12 +49,25 @@ export class EposEpson extends Common {
       },
     });
 
+    
 
 
     this.keyboardListener = new com.epson.epos2.keyboard.KeyPressListener({
       onKbdKeyPress: (param0, param1, param2 ) => {
-          console.log(param1)
-          console.log(param2)
+          //console.log(param1)
+          console.log(this.barcode.length)
+          console.log(this.barcode)
+       this.barcode = this.barcode + param2
+          console.log(param1);
+          console.log(param1.length)
+       
+
+          if (param1 == 13){
+            console.log('finish')
+            console.log(this.barcode)
+            this.barcode =""
+          }
+        
       }
 
     })
