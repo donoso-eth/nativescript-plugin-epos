@@ -1,14 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { android  } from "tns-core-modules/application";
-import { EposEpson } from 'nativescript-epos-epson';
-// declare let com: any;
-// declare let  EPOS_Exveption = com.epson.epos2.Epos2Exception;
-// declare let  EPOS_this.Printer = com.epson.epos2.this.printer.this.Printer
-// declare let  com.epson.epos2.Log;
-// declare let  com.epson.epos2.discovery.DeviceInfo;
-// declare let  com.epson.epos2.discovery.Discovery;
-// declare let  com.epson.epos2.discovery.DiscoveryListener;
-// declare let  com.epson.epos2.discovery.FilterOption;
+import { PrinterEpson,KeyboardEpson} from 'nativescript-epos-epson';
 
 
 
@@ -18,12 +10,13 @@ import { EposEpson } from 'nativescript-epos-epson';
 })
 export class HomeComponent implements OnInit {
 
-    printer: EposEpson;
+    printer: PrinterEpson;
+    keyboard: KeyboardEpson
 
     constructor() {
 
-
-        this.printer = new EposEpson()
+        this.keyboard = new KeyboardEpson()
+        this.printer = new PrinterEpson()
         // Use the component constructor to inject providers.
     }
 
@@ -55,14 +48,6 @@ export class HomeComponent implements OnInit {
 
     }
 
-    connectKeyboard(){
-
-        this.printer.connectKeyboard();
-       // this.printer.sendData()
-       // this.printer.sendData();
-    }
-
-
     connect(){
 
         this.printer.connect("TCP:192.168.0.157");
@@ -74,13 +59,26 @@ export class HomeComponent implements OnInit {
         this.printer.printer.disconnect()
     }
 
-        ngOnInit(): void {
+
+
+    connectKeyboard(){
+        this.keyboard.connect("TCP:192.168.0.157[HID2]")
+
+    }
+
+    startListening() {
+     this.keyboard.startReading().subscribe(x=> console.log(x))
+    }
+
+
+    disconnectKeyboard() {
+        this.keyboard.disconnect()
+    }
+
+    ngOnInit(): void {
 
 
 
 
         }
-    mDiscoveryListener(){
-        console.log('hola')
     }
-}

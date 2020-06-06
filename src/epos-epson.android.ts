@@ -1,30 +1,26 @@
-import { Common } from "./epos-epson.common";
+import {  } from "./epos-epson.common";
 import { android } from "tns-core-modules/application";
 import { Subject } from 'rxjs';
+import { PrinterCommon,KeyboardCommon } from "./epos-epson.common";
 declare let com: any;
 const Printer: any = com.epson.epos2.printer.Printer;
 const Keyboard:any = com.epson.epos2.keyboard.Keyboard;
 
-export class EposEpson extends Common {
+export class PrinterEpson implements PrinterCommon {
   printer: com.epson.epos2.printer.Printer;
-  keyboard: com.epson.epos2.keyboard.Keyboard
   context: any;
   connectionListener: any;
-  keyboardListener: any;
-  barcode ="";
-  public barcode$: Subject<any>;
+
+
 
 
   constructor() {
-    super();
     this.context = android.context;
     
     const myListener = new com.epson.epos2.printer.ReceiveListener({
       onPtrReceive: (param0, parm1, param2, param3) => {
         const info: com.epson.epos2.printer.PrinterStatusInfo = param2;
-        console.log(info.getOnline());
-        console.log(info.getErrorStatus());
-        console.log(info.getConnection());
+
       },
     });
 
@@ -32,14 +28,6 @@ export class EposEpson extends Common {
       onPtrStatusChange: (param0, param1) => {
         console.log("status: " + param1);
 
-        // switch (param1) {
-        //   case Printer.:
-
-        //     break;
-
-        //   default:
-        //     break;
-        // }
       },
     });
 
@@ -52,37 +40,6 @@ export class EposEpson extends Common {
     
 
 
-    this.keyboardListener = new com.epson.epos2.keyboard.KeyPressListener({
-      onKbdKeyPress: (param0, param1, param2 ) => {
-          //console.log(param1)
-          console.log(this.barcode.length)
-          console.log(this.barcode)
-       this.barcode = this.barcode + param2
-          console.log(param1);
-          console.log(param1.length)
-       
-
-          if (param1 == 13){
-            console.log('finish')
-            console.log(this.barcode)
-            this.barcode =""
-          }
-        
-      }
-
-    })
-
-    //= {
-    //   onPtrReceive: (info)=> {
-    //     console.log(info)
-    //   }
-
-    // }
-
-
-    this.keyboard = new Keyboard(this.context)
-
-    this.keyboard.setKeyPressEventListener(this.keyboardListener)
 
     this.printer = new Printer(Printer.TM_M30, Printer.MODEL_ANK, this.context);
     this.printer.setReceiveEventListener(myListener);
@@ -100,10 +57,6 @@ export class EposEpson extends Common {
   disconnect() {
     this.printer.stopMonitor();
     this.printer.disconnect();
-  }
-
-  connectKeyboard(){
-      this.keyboard.connect("TCP:192.168.0.157[HID2]", Keyboard.PARAM_DEFAULT);
   }
 
   connect(IP: string) {
@@ -148,7 +101,63 @@ export class EposEpson extends Common {
     this.printer.clearCommandBuffer();
   }
 
-  public greet() {
-    return "Hello, pachin pachin pachin";
+
+}
+
+
+export class KeyboardEpson implements KeyboardCommon {
+  keyboardListener: any;
+  keyboard: com.epson.epos2.keyboard.Keyboard;
+  context: any;
+  result$ = new Subject();
+ 
+  constructor() {
+
+    this.context = android.context;
+    
+    this.keyboard = new Keyboard(this.context)
+
+    this.keyboard.setKeyPressEventListener(this.keyboardListener)
+
+    this.keyboardListener = new com.epson.epos2.keyboard.KeyPressListener({
+      onKbdKeyPress: (param0, param1, param2 ) => {
+          //console.log(param1)
+      //     console.log(this.barcode.length)
+      //     console.log(this.barcode)
+      //  this.barcode = this.barcode + param2
+      //     console.log(param1);
+      //     console.log(param1.length)
+       
+          this.result$.next({code:param1, text:param2})
+          // if (param1 == 13){
+          //   console.log('finish')
+       
+          //   this.barcode =""
+          // }
+        
+      }
+  
+    })
+    
   }
+  
+
+  startReading() {
+    return this.result$
+  }
+
+  disconnect() {
+    this.keyboard.setKeyPressEventListener(null);
+    this.keyboard.disconnect();
+
+  }
+
+  connect(IP:string){
+    const IPT =  "TCP:192.168.0.157[HID2]"
+    this.keyboard.connect(IP, Keyboard.PARAM_DEFAULT);
+}
+
+
+
+
 }
