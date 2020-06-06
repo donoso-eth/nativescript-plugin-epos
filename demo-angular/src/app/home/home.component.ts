@@ -67,7 +67,17 @@ export class HomeComponent implements OnInit {
     }
 
     startListening() {
-     this.keyboard.startReading().subscribe(x=> console.log(x))
+    let barcode = ""
+     this.keyboard.result$.subscribe(x=> {
+        if (x['code'] == 13 ) {
+            console.log(barcode)
+            barcode = ""
+            return
+        }
+
+        barcode = barcode + x['text'];
+
+     })
     }
 
 

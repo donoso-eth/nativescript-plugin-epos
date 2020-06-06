@@ -1,4 +1,3 @@
-import { EposEpson } from 'nativescript-epos-epson';
 
 import { Component } from "@angular/core";
 

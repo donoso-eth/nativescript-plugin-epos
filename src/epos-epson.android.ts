@@ -109,16 +109,15 @@ export class KeyboardEpson implements KeyboardCommon {
   keyboardListener: any;
   keyboard: com.epson.epos2.keyboard.Keyboard;
   context: any;
-  result$ = new Subject();
+  result$ = new Subject()//<{ code: string, text:string};
  
   constructor() {
 
     this.context = android.context;
     
     this.keyboard = new Keyboard(this.context)
-
-    this.keyboard.setKeyPressEventListener(this.keyboardListener)
-
+   // this.result$.subscribe(x=> console.log(x))
+   
     this.keyboardListener = new com.epson.epos2.keyboard.KeyPressListener({
       onKbdKeyPress: (param0, param1, param2 ) => {
           //console.log(param1)
@@ -127,7 +126,7 @@ export class KeyboardEpson implements KeyboardCommon {
       //  this.barcode = this.barcode + param2
       //     console.log(param1);
       //     console.log(param1.length)
-       
+     //   console.log(param2,param1)
           this.result$.next({code:param1, text:param2})
           // if (param1 == 13){
           //   console.log('finish')
@@ -139,6 +138,9 @@ export class KeyboardEpson implements KeyboardCommon {
   
     })
     
+    this.keyboard.setKeyPressEventListener(this.keyboardListener)
+
+
   }
   
 
